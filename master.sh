@@ -1,3 +1,6 @@
+##-----------Author--------------
+#        Name: Sundeep Paluru
+##-------------------------------
 if test -f ~/.kube/config
 then
 echo " Kubeadm installed..✅"

@@ -1,3 +1,7 @@
+##-----------Author--------------
+#        Name: Sundeep Paluru
+##-------------------------------
+
 if systemctl status kubelet 2>/dev/null
 then
 echo " Kubeadm installed..✅"
