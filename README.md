@@ -35,7 +35,7 @@ vagrant ssh master
 ```
 
 ## Issues
-> In case of any issues, please open the same in the repo. Ill try correct ASAP.
+> In case of any issues, please open a issue under repo. Ill try to correct ASAP.
 
 ### Yours
 ## Sundeep :) AKA Sunny ;)
