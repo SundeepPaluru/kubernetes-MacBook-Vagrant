@@ -80,10 +80,12 @@ sudo cp /etc/kubernetes/admin.conf /home/vagrant/.kube/config
 sudo chown $(id vagrant -u):$(id vagrant -g) /home/vagrant/.kube/config
 
 kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml > /dev/null 2>&1
-sleep 5
+sleep 20
 
 joinCommand=$(kubeadm token create --print-join-command 2>/dev/null)
 echo "$joinCommand --ignore-preflight-errors=all" > /home/vagrant/joincluster.sh
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+echo "alias k=kubectl" >> ~/.bashrc && echo "complete -F __start_kubectl k" >> ~/.bashrc
 
 fi
 

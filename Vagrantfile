@@ -22,6 +22,7 @@ Vagrant.configure("2") do |config|
         h.memory = 4096
         h.cpus = 3
 		    h.name = "master"
+        h.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
     end
 
     node.vm.network "private_network", ip: "10.0.0.10"
@@ -31,8 +32,9 @@ Vagrant.configure("2") do |config|
     node.vm.synced_folder ".", "/vagrant", disabled: true
     node.vm.provision "file", source: "./master.sh", destination: "~/"
     node.vm.provision "Running-Kubeadm", type: "shell", :path => "./master.sh", run: "always"
-    node.trigger.after :provision do |trigger|
-          trigger.run = {inline: "scp -i .vagrant/machines/master/virtualbox/private_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no vagrant@10.0.0.10:/home/vagrant/joincluster.sh ./"}
+    node.trigger.after :up do |trigger|
+          trigger.run = {inline: "scp -i ./.vagrant/machines/master/virtualbox/private_key -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no vagrant@10.0.0.10:/home/vagrant/joincluster.sh ./"
+          }
     end
   end
 
@@ -41,9 +43,10 @@ NUM_WORKER_NODE=2
   (1..NUM_WORKER_NODE).each do |i|
       config.vm.define "worker#{i}" do |node|
         node.vm.provider "virtualbox" do |h|
-            h.memory = 2048
-            h.cpus = 2
+            h.memory = 4096
+            h.cpus = 3
             h.name = "worker#{i}"
+            h.customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']
         end
 
         node.vm.network "private_network", ip: "10.0.0.1#{i}"
